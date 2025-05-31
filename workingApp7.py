@@ -9,8 +9,11 @@ from transformers import pipeline
 
 import os
 import asyncio
-os.environ["KMP_DUPLICATE_LIB_OK"] = "TRUE"
-asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+import sys
+
+if sys.platform.startswith('win'):
+    asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
+
 
 @st.cache_resource
 def load_summarizer():
