@@ -17,6 +17,11 @@ if sys.platform.startswith('win'):
 
 @st.cache_resource
 def load_summarizer():
+    try:
+        asyncio.get_running_loop()
+    except RuntimeError:
+        loop = asyncio.new_event_loop()
+        asyncio.set_event_loop(loop)
     summarizer = pipeline("summarization", model="facebook/bart-large-cnn")
     return summarizer
 
